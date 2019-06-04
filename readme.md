@@ -4,7 +4,7 @@
 		developers only need to care about code writing related to business logic,
 		without having to think about deployment, fault tolerance, service load balance, etc.
 		
-		[ÖÐÎÄ°æËµÃ÷] (http://example.com/)
+		[Ã–ÃÃŽÃ„Â°Ã¦Ã‹ÂµÃƒÃ·] (http://example.com/)
 	
 	 
 
@@ -32,7 +32,7 @@
 
 ## Overview
 
-		1. 	This framework implements a multi-language micro-service function 		¡ú_¡ú
+		1. 	This framework implements a multi-language micro-service function 		Â¡Ãº_Â¡Ãº
 			which can be used to implement multi-language 	
 			micro-service writing and provide services to the outside (JAVA/PHP/PYTHON)
 		
@@ -45,7 +45,7 @@
 			3)	Simple to deploy, less external dependencies
 			
 		4.	Developers can focus their work on writing service code that is directly related to business 
-			logic without having to think too much about framework-related content.		¡ä(O©nO*)¡ä
+			logic without having to think too much about framework-related content.		Â¡Ã¤(OÂ©nO*)Â¡Ã¤
 			
 		5. 	There may be some bugs in this open source version, if you find it, you can contact me.	>_<|||
 		
@@ -128,7 +128,7 @@
 		
 ## Api gateway how to processing
 
-	![](https://github.com/ashjpo/LM-MS/blob/master/struct.jpg)
+		![](https://github.com/ashjpo/LM-MS/blob/master/struct.jpg)
 		
 		
 ## using Frame
@@ -172,7 +172,7 @@
 		
 		
 		
-		3.AS¸ùÄ¿Â¼
+		3.ASÂ¸Ã¹Ã„Â¿Ã‚Â¼
 			mic_service
 				|---common		#Public directory for public libraries in various languages
 				|---init			#The initialization script is used to start the service
@@ -333,7 +333,7 @@
 						stop_service("serviceA", "*", "*");
 						stop_service_id("service_1559206182267_20","*");
 						
-			...(Look at the code)			¡Ñ©n¡Ñ¡¬¨O¡ã 
+			...(Look at the code)			Â¡Ã‘Â©nÂ¡Ã‘Â¡Â¬Â¨OÂ¡Ã£ 
 		
 		
 		
@@ -343,15 +343,15 @@
 			show_api_gate_mcs("*");
 			show_service_as_api_gate("*");
 			
-			...(Look at the code) 		¡Ñ©n¡Ñ¡¬¨O¡ã 
+			...(Look at the code) 		Â¡Ã‘Â©nÂ¡Ã‘Â¡Â¬Â¨OÂ¡Ã£ 
 		
 ## pressure test
 	
-		[TODO]	©¸(^o^)©¼;
+		[TODO]	Â©Â¸(^o^)Â©Â¼;
 	
 ## Compared with other frames
 
-		[TODO]	¡Ñ©n¡Ñ¡¬¨O¡ã
+		[TODO]	Â¡Ã‘Â©nÂ¡Ã‘Â¡Â¬Â¨OÂ¡Ã£
 	
 ## Supported language
 
