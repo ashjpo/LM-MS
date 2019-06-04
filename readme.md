@@ -31,24 +31,24 @@
 
 ## Overview
 
-		1. 	This framework implements a multi-language micro-service function 										¡ú_¡ú
+		1. 	This framework implements a multi-language micro-service function 		¡ú_¡ú
 			which can be used to implement multi-language 	
 			micro-service writing and provide services to the outside (JAVA/PHP/PYTHON)
 		
-		2.	This framework can realize single-node multi-service, multi-node multi-service, 						O__O"
+		2.	This framework can realize single-node multi-service, multi-node multi-service, O__O"
 			multi-api gateway combination of multiple modes				
 		
-		3.	The advantage of this framework over the mainstream framework is that:								O(¡É_¡É)O
+		3.	The advantage of this framework over the mainstream framework is that:		O(¡É_¡É)O
 			1)	Can be written in multiple languages to provide backend services for applications
 			2)	Lightweight
 			3)	Simple to deploy, less external dependencies
 			
 		4.	Developers can focus their work on writing service code that is directly related to business 
-			logic without having to think too much about framework-related content.						¡ä(*>©n<*)¡ä
+			logic without having to think too much about framework-related content.		¡ä(*>©n<*)¡ä
 			
-		5. 	There may be some bugs in this open source version, if you find it, you can contact me.		>_<|||
+		5. 	There may be some bugs in this open source version, if you find it, you can contact me.	>_<|||
 		
-		6.	The entire framework is written in Java, and the performance is efficient.			O(¡É_¡É)O
+		6.	The entire framework is written in Java, and the performance is efficient.	O(¡É_¡É)O
 			
 
 ## Microservices framework
@@ -127,19 +127,7 @@
 		
 ## Api gateway how to processing
 
-																	|----------------------------downgrade<-|
-																	|										|
-																	|				|->use cache->response	|
-																	|				|						|
-		request->iplist->Global current limit->Processing request->dispatch center->find->cache->without cache->service if down grade->service fusing->service current limit->SLB->service->syn/asyn response
-																	|			  	|						|			|			|
-																	|			  	|->without cache--------			|			|
-																	|													|			|
-																	|													|			|
-																	|->no router->error response<-----------------------|-----------|
-																						|
-																						|
-																						|--->downgrade
+	![RUNOOB Í¼±ê](http://static.runoob.com/images/runoob-logo.png)
 		
 		
 ## using Frame
