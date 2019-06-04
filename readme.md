@@ -5,7 +5,7 @@
 		without having to think about deployment, fault tolerance, service load balance, etc.
 		
 		[visual basic](./学习/visualbasic)
-	
+		![baidu](http://www.baidu.com/img/bdlogo.gif "百度logo") 
 	 
 
 	
