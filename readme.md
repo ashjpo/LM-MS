@@ -19,10 +19,11 @@
 		2.	Project backend code is written in multiple languages (java and php), and current mainstream 
 			frameworks rarely have microservices that support multiple languages.
 			
-		3.	At present, the mainstream microservices framework is complex in configuration and takes up large resources.
+		3.	At present, the mainstream microservices framework is complex in configuration 
+			and takes up large resources.
 		
-		4.	Using traditional http calls is less efficient, and there are more tasks in the system that require 
-			multiple backend services, resulting in a large performance penalty.
+		4.	Using traditional http calls is less efficient, and there are more tasks in the system 
+			that require multiple backend services, resulting in a large performance penalty.
 			
 		Note:	After that, I will write a detailed operation manual.At present, part of the code 
 				comment for this program is Chinese, which will be translated into English.
@@ -30,10 +31,12 @@
 
 ## Overview
 
-		1. 	This framework implements a multi-language micro-service function, which can be used to implement multi-language 	¡ú_¡ú
+		1. 	This framework implements a multi-language micro-service function 										¡ú_¡ú
+			which can be used to implement multi-language 	
 			micro-service writing and provide services to the outside (JAVA/PHP/PYTHON)
 		
-		2.	This framework can realize single-node multi-service, multi-node multi-service, multi-api gateway combination of multiple modes				O__O"
+		2.	This framework can realize single-node multi-service, multi-node multi-service, 						O__O"
+			multi-api gateway combination of multiple modes				
 		
 		3.	The advantage of this framework over the mainstream framework is that:								O(¡É_¡É)O
 			1)	Can be written in multiple languages to provide backend services for applications
@@ -52,8 +55,8 @@
 		
 		1.	main-control-server is referred to as MCS
 			
-			Mainly used to receive external control commands, control the api gateway and application nodes, and monitor heartbeat data, 
-			and maintain the service table together with the api gateway.
+			Mainly used to receive external control commands, control the api gateway and application nodes, 
+			and monitor heartbeat data,and maintain the service table together with the api gateway.
 			
 		2.	api-gateway
 			
@@ -70,15 +73,18 @@
 		
 		1.	Black list and white list
 		
-			You can set the ip whitelist or ip blacklist in the gateway configuration file to restrict ip rejection to the gateway.
+			You can set the ip whitelist or ip blacklist in the gateway configuration file to 
+			restrict ip rejection to the gateway.
 			
 		2.	Initially prevent ddos (to be improved) [TODO]
 			
-			The framework of this open source version simply implements a method of controlling ddos via ip, and will continue to improve afterwards.
+			The framework of this open source version simply implements a method of controlling ddos 
+			via ip, and will continue to improve afterwards.
 			
 		3.	Global flow control
 		
-			Control the overall traffic of the api gateway. When the traffic exceeds the limit, some requests will be returned to the flow control.
+			Control the overall traffic of the api gateway. When the traffic exceeds the limit, some requests 
+			will be returned to the flow control.
 			
 		4.	Service level flow control (using the token algorithm)
 		
@@ -86,25 +92,29 @@
 			
 		5.	Service level blown
 			
-			When the traffic of a service exceeds the limit, the gateway will temporarily stop setting the service to a closed state, and then the 
-			service will be turned into a half-open state for a while, and then will turn to the open state.
+			When the traffic of a service exceeds the limit, the gateway will temporarily stop setting the 
+			service to a closed state, and then the service will be turned into a half-open state for a while, 
+			and then will turn to the open state.
 			
 		6.	Request level cache (text cache/memory cache, based on redis)
 		
-			This framework provides two cache modes of document and memory, which can set the cache time in the configuration file, etc.
-			Memory cache based on redis.
+			This framework provides two cache modes of document and memory, which can set the cache time 
+			in the configuration file, etc. Memory cache based on redis.
 			
 		7.	service load balance (can use random method / polling method / weighted rounding method)
 			
-			The framework provides a complete load balancing mechanism, optional algorithm random method / polling method / weighted rounding method.
-			The framework will direct the same request to the same version of the service where the different nodes are located.
+			The framework provides a complete load balancing mechanism, optional algorithm random method 
+			/ polling method / weighted rounding method.
+			The framework will direct the same request to the same version of the service where the 
+			different nodes are located.
 			
 		8.	Service downgrade [TODO]
 		
 		9.	Aggregation request
 		
-			The aggregation request can be configured in the gateway configuration file. After the HTTP request is sent, the data of the http request will be 
-			provided by the micro-service of the backend. Currently, only the serial mode is supported, and then the parallel mode is supported.
+			The aggregation request can be configured in the gateway configuration file. After the HTTP 
+			request is sent, the data of the http request will be provided by the micro-service of the backend. 
+			Currently, only the serial mode is supported, and then the parallel mode is supported.
 			
 		10.	Html forwarding
 		
@@ -134,15 +144,16 @@
 		
 ## using Frame
 
-		1.Run mic-service-run
-			Run-MCS.bat->Run-API-GATEWAY.bat->Run-AS.bat
-			Start the main control node, api gateway, application node
+		1.	Run mic-service-run
+				Run-MCS.bat->Run-API-GATEWAY.bat->Run-AS.bat
+				Start the main control node, api gateway, application node
 			
-		2.Writing microservices
-			Below the mic_service is the root directory of the application node, 
-			and the microservice package is placed in the serice folder below the node.
+		2.	Writing microservices
+				Below the mic_service is the root directory of the application node, 
+				and the microservice package is placed in the serice folder below the node.
 			
-		3.In mic_service you can write micro-services in different languages, you only need to specify in the json file.
+		3.	In mic_service you can write micro-services in different languages, 
+				you only need to specify in the json file.
 		
 ## Directory Structure
 		
@@ -233,32 +244,32 @@
 	
 ## Microservice configuration json sample file
 	
-		{	"name": "serviceB",													#Microservice name
-			"call_type": "rpc",													#Call type(rpc http)
+		{	"name": "serviceB",											#Microservice name
+			"call_type": "rpc",											#Call type(rpc http)
 			"service_type": "common",											
-			"version": "v1.0",													#Microservice version
-			"service_host": "127.0.0.1",										#ip
-			"service_url": "/b",												#Microservice routing address
-			"version_code": 1,													#version number
-			"language": "php",													#Writing language
-			"api-gate": "api-gate1",											#Exposed gateway
+			"version": "v1.0",											#Microservice version
+			"service_host": "127.0.0.1",								#ip
+			"service_url": "/b",										#Microservice routing address
+			"version_code": 1,											#version number
+			"language": "php",											#Writing language
+			"api-gate": "api-gate1",									#Exposed gateway
 			"service_mes": "aaa",											
-			"mods": [{															#One module
-				"name": "mode1",												#Module name
-				"file_path": "D:/mic_service/service/serviceB/functions/mode1.class.php",			#Module file path
-				"functions": [{													#function
-					"name": "a1",												#function name
-					"syn_asyn": "syn",											#Synchronous or asynchronous	(syn/asyn)
-					"http_url": "/url1",										#http Routing address
+			"mods": [{													#One module
+				"name": "mode1",										#Module name
+				"file_path": "D:/mic_service/service/serviceB/functions/mode1.class.php",	#Module file path
+				"functions": [{											#function
+					"name": "a1",										#function name
+					"syn_asyn": "syn",									#Synchronous or asynchronous	(syn/asyn)
+					"http_url": "/url1",								#http Routing address
 					"params": [],												
-					"cache": "memory"											#cache(""/"text"/"memory")
+					"cache": "memory"									#cache(""/"text"/"memory")
 				}, {
 					"name": "b1",
 					"syn_asyn": "syn",
 					"http_url": "/url2",
 					"params": [
-						["http_a", "a", "get"]									#parameter list (first is the parameter key of the request outside the gateway, second is name of the function)
-					],
+						["http_a", "a", "get"]			#parameter list (first is the parameter key of the request 
+					],										outside the gateway, second is name of the function)
 					"cache": ""
 				}, {
 					"name": "btest",
@@ -277,8 +288,8 @@
 		[{
 			"call_url": "/aaa",									#Call routing outside the gateway
 			"serial_parallel": "parallel",						#Serial or parallel (this version only supports serial)
-			"ask": ["/b/url1", "/b/url2"],						#The microservice url requested in the gateway (same as the externally requested url)
-			"key": ["key1", "key2"]
+			"ask": ["/b/url1", "/b/url2"],						#The microservice url requested in the gateway 
+			"key": ["key1", "key2"]									(same as the externally requested url)
 		}]
 	
 		Return example:
@@ -306,7 +317,8 @@
 	
 ## control program
 
-		The program provides a class that quickly sends the mqtt command control node and a class that views node information.
+		The program provides a class that quickly sends the mqtt command control 
+		node and a class that views node information.
 		
 		1.Control_service_as.java is used to send control information in send_service_control_commond
 		
