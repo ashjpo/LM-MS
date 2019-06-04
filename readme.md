@@ -83,8 +83,8 @@
 			
 		3.	Global flow control
 		
-			Control the overall traffic of the api gateway. When the traffic exceeds the limit, some requests 
-			will be returned to the flow control.
+			Control the overall traffic of the api gateway. When the traffic exceeds the limit, 
+			some requests will be returned to the flow control.
 			
 		4.	Service level flow control (using the token algorithm)
 		
@@ -92,9 +92,9 @@
 			
 		5.	Service level blown
 			
-			When the traffic of a service exceeds the limit, the gateway will temporarily stop setting the 
-			service to a closed state, and then the service will be turned into a half-open state for a while, 
-			and then will turn to the open state.
+			When the traffic of a service exceeds the limit, the gateway will temporarily stop setting 
+			the service to a closed state, and then the service will be turned into a half-open state 
+			for a while,and then will turn to the open state.
 			
 		6.	Request level cache (text cache/memory cache, based on redis)
 		
@@ -185,15 +185,15 @@
 		
 		3.AS¸ùÄ¿Â¼
 			mic_service
-				|---common				#Public directory for public libraries in various languages
-				|---init				#The initialization script is used to start the service
-				|---config				#Configuration file directory
-				|---service				#Microservice program storage directory
-						|---serviceA	#Microservice name
-								|---common	#Common library of the service
-								|---config	#Service profile json ***
-								|---functions	#Service program
-								|---test	#test program
+				|---common		#Public directory for public libraries in various languages
+				|---init			#The initialization script is used to start the service
+				|---config			#Configuration file directory
+				|---service			#Microservice program storage directory
+					|---serviceA	#Microservice name
+							|---common	#Common library of the service
+							|---config	#Service profile json ***
+							|---functions	#Service program
+							|---test		#test program
 		
 		
 		
