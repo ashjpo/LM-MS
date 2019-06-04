@@ -4,9 +4,10 @@
 		developers only need to care about code writing related to business logic,
 		without having to think about deployment, fault tolerance, service load balance, etc.
 		
-		[中文版说明] (http://example.com/ "With a Title")
-		
-		This is an [example link](http://example.com/ "With a Title").
+		[中文版说明] (http://example.com/)
+	
+	 
+
 	
 ## The original intention of developing this framework
 
@@ -38,17 +39,17 @@
 		2.	This framework can realize single-node multi-service, multi-node multi-service, O__O"
 			multi-api gateway combination of multiple modes				
 		
-		3.	The advantage of this framework over the mainstream framework is that:		O(∩_∩)O
+		3.	The advantage of this framework over the mainstream framework is that:		O(O_O)O
 			1)	Can be written in multiple languages to provide backend services for applications
 			2)	Lightweight
 			3)	Simple to deploy, less external dependencies
 			
 		4.	Developers can focus their work on writing service code that is directly related to business 
-			logic without having to think too much about framework-related content.		′(*>﹏<*)′
+			logic without having to think too much about framework-related content.		′(O﹏O*)′
 			
 		5. 	There may be some bugs in this open source version, if you find it, you can contact me.	>_<|||
 		
-		6.	The entire framework is written in Java, and the performance is efficient.	O(∩_∩)O
+		6.	The entire framework is written in Java, and the performance is efficient.	O(O_O)O
 			
 
 ## Microservices framework
@@ -127,7 +128,7 @@
 		
 ## Api gateway how to processing
 
-	![RUNOOB 图标](http://static.runoob.com/images/runoob-logo.png)
+	![](https://github.com/ashjpo/LM-MS/blob/master/struct.jpg)
 		
 		
 ## using Frame
