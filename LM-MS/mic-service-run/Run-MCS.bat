@@ -1,0 +1,1 @@
+java -jar ./main-control-server.jar MCS_Main.java D:/MCS

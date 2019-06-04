@@ -1,0 +1,1 @@
+java -jar ./api-gateway.jar APIGATE_Main.java D:/Api_Gate

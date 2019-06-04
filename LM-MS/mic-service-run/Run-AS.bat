@@ -1,0 +1,1 @@
+java -jar ./app-server.jar AS_Main.java D:/mic_service
