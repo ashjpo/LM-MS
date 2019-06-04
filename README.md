@@ -1,11 +1,12 @@
 # LM-MS
 ### Lightweight & multi-language microservices framework (LM-MS)
 
+[中文版说明 →_→] (https://github.com/ashjpo/LM-MS/blob/master/readme_ch.md)
+
 		A multi-language, lightweight, high-performance microservices framework, 
 		developers only need to care about code writing related to business logic,
 		without having to think about deployment, fault tolerance, service load balance, etc.
 		
-[中文版说明 →_→] (https://github.com/ashjpo/LM-MS/blob/master/readme_ch.md)
 	
 	 
 
