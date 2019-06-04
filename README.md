@@ -130,7 +130,7 @@
 		
 ## Api gateway how to processing
 
-![](https://github.com/ashjpo/LM-MS/blob/master/struct.jpg)
+![](https://github.com/ashjpo/LM-MS/blob/master/struct_en.png)
 		
 		
 ## using Frame
