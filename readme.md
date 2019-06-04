@@ -4,7 +4,7 @@
 		developers only need to care about code writing related to business logic,
 		without having to think about deployment, fault tolerance, service load balance, etc.
 		
-		[ÖÐÎÄ°æËµÃ÷] (http://example.com/)
+		[百度](http://baidu.com)
 	
 	 
 
