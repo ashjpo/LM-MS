@@ -5,7 +5,7 @@
 		developers only need to care about code writing related to business logic,
 		without having to think about deployment, fault tolerance, service load balance, etc.
 		
-		[中文版说明] (http://example.com/)
+[中文版说明] (http://example.com/)
 	
 	 
 
@@ -129,7 +129,7 @@
 		
 ## Api gateway how to processing
 
-	![](https://github.com/ashjpo/LM-MS/blob/master/struct.jpg)
+![](https://github.com/ashjpo/LM-MS/blob/master/struct.jpg)
 		
 		
 ## using Frame
