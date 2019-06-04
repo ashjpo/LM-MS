@@ -1,345 +1,382 @@
-### 轻量级多语言微服务框架(LM-MS)
-	(Lightweight & multi-language microservices framework)
-	
-	一种兼容多语言、轻量级、高性能微服务框架，开发者只需要关心与业务逻辑相关的代码编写，无需过多的考虑部署，容错，负载等内容
-	
-## 开发本框架的初衷
-		
-		1. 由于之前项目中后端需要对外提供多种服务，包括视频流传输，人脸faceid数据库同步，接收顾客消费数据，后台管理系统，
-			店铺设备对接，接收客流统计数据等等，所以导致后端逻辑复杂，因此后端使用微服务的形式对外提供数据支持
-			
-		2. 项目后端代码使用多种语言编写(java和php)，目前主流框架很少有支持多种语言的微服务
-		
-		3. 目前主流微服务框架配置复杂，占用资源大
-		
-		4.使用传统http调用效率较低，同时系统中有较多任务需要请求多次后端服务，导致性能损耗较大
+### Lightweight & multi-language microservices framework (LM-MS)
 
-## 概述
-
-		1.本框架实现了一个多语言的微服务功能，可以通过本框架实现多语言的微服务编写，并对外统一提供服务(JAVA/PHP/PYTHON)	→_→
-		2.本框架可以实现单节点多服务，和多节点多服务，多api网关多种模式的组合				O__O"
-		3.本框架与主流框架相比优势在于											O(∩_∩)O
-			1）可以通过多种语言共同编写为应用提供后端服务
-			2）轻量级
-			3）部署简单，外部依赖较少
-			
-		4.开发者可以最大程度的将工作的重心集中在编写和业务逻辑直接相关的服务代码上而不需要过多考虑与框架相关的内容		′(*>﹏<*)′
-		5.上面这个开源的版本中可能存在部分bug，如果发现可以联系我		>_<|||
-		6.整个框架使用java编写，性能高效			O(∩_∩)O
-			
+		A multi-language, lightweight, high-performance microservices framework, 
+		developers only need to care about code writing related to business logic,
+		without having to think about deployment, fault tolerance, service load balance, etc.
 		
-## 微服务框架组成
-
-		1.主控制节点 (main-control-server) 后面简称MCS
-			主要用于接收外部控制命令，控制api网关和应用节点，并且监听心跳数据，和api网关共同维护服务表
-			
-		2.api网关(api-gateway)
-			接收外部访问，并将外部访问以rpc形式转发到内部微服务
-			提供流量控制，熔断，SLB，服务降级，等功能
-			阻挡不正确协议等
-			错误消息重定向等
+		[���İ�˵��] (http://example.com/ "With a Title")
 		
-		3.应用节点(app-server) 后面简称AS
-			维护节点上的微服务应用，对外提供服务
-			
-## api网关
-		
-		1.黑白名单
-			
-			可以在网关配置文件中设置ip白名单或ip黑名单将限制ip拒绝到网关之外
-			
-		2.初步防止ddos(待完善) [TODO]
-			
-			本开源版本的框架只是简单的实现了一个通过ip来控制ddos的方法，之后会继续改进
-		
-		3.全局流量控制
-		
-			控制api网关的总体流量，当流量超出限制时，部分请求会被返回流量控制
-			
-		4.服务级流量控制		(使用token算法)
-			
-			本框架为每个服务单独添加了流量控制
-			
-		5.服务级熔断		
-			
-			当某个服务的流量超出限制时，网关会暂时停止将这个服务设为闭状态，之后一段时间会将服务变成半开状态，之后会转向开状态
-			
-			
-		6.请求级别的缓存		(文本缓存/内存缓存，基于redis)
-		
-			本框架提供文档和内存两种缓存模式，可以在配置文件中设置缓存时间等
-			内除缓存基于redis
-			
-			
-		7.SLB负载均衡		(可使用随机法/轮询法/加权轮询法)
-			
-			框架提供了完整的负载均衡机制，可选算法随机法/轮询法/加权轮询法
-			框架会将相同请求导向不同节点所在的同一个版本的服务
-		
-		8.服务降级			[TODO]
-		
-		
-		
-		9.聚合请求
-			
-			可以在网关配置文件中配置聚合请求，聚合请求是当发送一个http请求之后，这个http请求的数据会由斗个后端的微服务提供，目前只支持串行模式，之后会支持并行模式
-		
-		10.html转发
-		
-		11.同步/异步服务
-		
-		
-		
-## api网关处理流程
+		This is an [example link](http://example.com/ "With a Title").
 	
-	
+## The original intention of developing this framework
+
+		1. 	Because the server of the previous project needs to provide a variety of services, 
+			including video streaming, faceid database synchronization, receiving customer 
+			consumption data, background management system,Shop equipment docking, receiving passenger 
+			flow statistics, etc., so the back-end logic is complex, so the server provides data support 
+			in the form of micro-services.
+			
+		2.	Project backend code is written in multiple languages (java and php), and current mainstream 
+			frameworks rarely have microservices that support multiple languages.
+			
+		3.	At present, the mainstream microservices framework is complex in configuration and takes up large resources.
 		
-													|---------------------------------降级<-|
-													|										|
-													|				|->cache可行->返回		|
-													|				|						|
-		request->白/黑名单->全局限流->处理请求->转发调度中心->找到->cache判断->不进行cache->服务降级判断->服务级熔断->服务级限流->SLB->服务->同步/异步返回
-													|			  	|						|			|			|
-													|			  	|->cache不可行----------------			|			|
-													|													|			|
-													|													|			|
-													|->没有找到匹配->默认/无/限流<----------------------|-----------|
+		4.	Using traditional http calls is less efficient, and there are more tasks in the system that require 
+			multiple backend services, resulting in a large performance penalty.
+			
+		Note:	After that, I will write a detailed operation manual.At present, part of the code 
+				comment for this program is Chinese, which will be translated into English.
+		
+
+## Overview
+
+		1. 	This framework implements a multi-language micro-service function, which can be used to implement multi-language 	��_��
+			micro-service writing and provide services to the outside (JAVA/PHP/PYTHON)
+		
+		2.	This framework can realize single-node multi-service, multi-node multi-service, multi-api gateway combination of multiple modes				O__O"
+		
+		3.	The advantage of this framework over the mainstream framework is that:								O(��_��)O
+			1)	Can be written in multiple languages to provide backend services for applications
+			2)	Lightweight
+			3)	Simple to deploy, less external dependencies
+			
+		4.	Developers can focus their work on writing service code that is directly related to business 
+			logic without having to think too much about framework-related content.						��(*>�n<*)��
+			
+		5. 	There may be some bugs in this open source version, if you find it, you can contact me.		>_<|||
+		
+		6.	The entire framework is written in Java, and the performance is efficient.			O(��_��)O
+			
+
+## Microservices framework
+		
+		1.	main-control-server is referred to as MCS
+			
+			Mainly used to receive external control commands, control the api gateway and application nodes, and monitor heartbeat data, 
+			and maintain the service table together with the api gateway.
+			
+		2.	api-gateway
+			
+			Receive external access and forward external access to rpc to internal microservices
+			Provides flow control, blown, SLB, service downgrade, and more
+			Block incorrect protocols, etc.
+			Error message redirection, etc.
+			
+		3.	app-server is referred to as AS
+		
+			Maintain the microservice application on the node and provide external services.
+			
+## api-gateway
+		
+		1.	Black list and white list
+		
+			You can set the ip whitelist or ip blacklist in the gateway configuration file to restrict ip rejection to the gateway.
+			
+		2.	Initially prevent ddos (to be improved) [TODO]
+			
+			The framework of this open source version simply implements a method of controlling ddos via ip, and will continue to improve afterwards.
+			
+		3.	Global flow control
+		
+			Control the overall traffic of the api gateway. When the traffic exceeds the limit, some requests will be returned to the flow control.
+			
+		4.	Service level flow control (using the token algorithm)
+		
+			This framework adds separate flow control to each service.
+			
+		5.	Service level blown
+			
+			When the traffic of a service exceeds the limit, the gateway will temporarily stop setting the service to a closed state, and then the 
+			service will be turned into a half-open state for a while, and then will turn to the open state.
+			
+		6.	Request level cache (text cache/memory cache, based on redis)
+		
+			This framework provides two cache modes of document and memory, which can set the cache time in the configuration file, etc.
+			Memory cache based on redis.
+			
+		7.	service load balance (can use random method / polling method / weighted rounding method)
+			
+			The framework provides a complete load balancing mechanism, optional algorithm random method / polling method / weighted rounding method.
+			The framework will direct the same request to the same version of the service where the different nodes are located.
+			
+		8.	Service downgrade [TODO]
+		
+		9.	Aggregation request
+		
+			The aggregation request can be configured in the gateway configuration file. After the HTTP request is sent, the data of the http request will be 
+			provided by the micro-service of the backend. Currently, only the serial mode is supported, and then the parallel mode is supported.
+			
+		10.	Html forwarding
+		
+		11.	Synchronous/asynchronous service
+		
+		
+		
+		
+		
+		
+## Api gateway how to processing
+
+																	|----------------------------downgrade<-|
+																	|										|
+																	|				|->use cache->response	|
+																	|				|						|
+		request->iplist->Global current limit->Processing request->dispatch center->find->cache->without cache->service if down grade->service fusing->service current limit->SLB->service->syn/asyn response
+																	|			  	|						|			|			|
+																	|			  	|->without cache--------			|			|
+																	|													|			|
+																	|													|			|
+																	|->no router->error response<-----------------------|-----------|
 																						|
 																						|
-																						|--->降级
+																						|--->downgrade
 		
-## 框架使用
-	
-	1.运行mic-service-run下	
-		Run-MCS.bat->Run-API-GATEWAY.bat->Run-AS.bat
-		分别是启动主控制节点，api网关，应用节点
-	
-	2.编写微服务
-		在mic_service下面是应用节点的根目录，在本节点下面的serice文件夹中放微服务的文件包
 		
-	3.在mic_service下可以编写不同语言的微服务，只需要在json文件中指定
-	
-		
-## 目录结构
+## using Frame
 
-	1.MCS根目录
-		MCS
-		|---config	配置文件路径
-				|---api-gate.properties
-				|---as.properties
-				|---mqtt.properties
-				|---mqtt_topic.properties
+		1.Run mic-service-run
+			Run-MCS.bat->Run-API-GATEWAY.bat->Run-AS.bat
+			Start the main control node, api gateway, application node
+			
+		2.Writing microservices
+			Below the mic_service is the root directory of the application node, 
+			and the microservice package is placed in the serice folder below the node.
+			
+		3.In mic_service you can write micro-services in different languages, you only need to specify in the json file.
 		
+## Directory Structure
 		
-	2.api网关根目录
-		Api_Gate
-			|---aggregation			聚合请求配置文件路径
-			|		|---aggregation_service.json
-			|
-			|---config	配置文件路径
-					|---cache.properties
-					|---ddos.properties
-					|---flow_control.properties
-					|---fusing.properties
-					|---main.properties
+		1.MCS
+			MCS
+			|---config	
+					|---api-gate.properties
+					|---as.properties
 					|---mqtt.properties
 					|---mqtt_topic.properties
-					|---server.properties
-	
-	
-	
-	3.AS根目录
-		mic_service
-			|---common	公共目录存放各种语言的公共库
-			|---init	初始化脚本用于启动服务
-			|---config	配置文件目录
-			|---service	微服务程序存放目录
-					|---serviceA	微服务名称
-							|---common	本服务的公共库
-							|---config	服务的配置文件json ***
-							|---functions	服务程序
-							|---test	测试程序
-	
-	
-
-## 微服务编写示例(PHP版)
-
-	本程序存放在functions文件夹中的mode1.class.php
-	 ``` php
-	  <?php
-			require "Test.class.php";
-			class mode1{
-				public function a1(){
-					return "hehe";
-				}
 			
-				public function b1($a){
-					$t=new Test();
-					return "hehe".$a;
+			
+		2.api
+			Api_Gate
+				|---aggregation						#Aggregation request profile path
+				|		|---aggregation_service.json
+				|
+				|---config	
+						|---cache.properties
+						|---ddos.properties
+						|---flow_control.properties
+						|---fusing.properties
+						|---main.properties
+						|---mqtt.properties
+						|---mqtt_topic.properties
+						|---server.properties
+		
+		
+		
+		3.AS��Ŀ¼
+			mic_service
+				|---common				#Public directory for public libraries in various languages
+				|---init				#The initialization script is used to start the service
+				|---config				#Configuration file directory
+				|---service				#Microservice program storage directory
+						|---serviceA	#Microservice name
+								|---common	#Common library of the service
+								|---config	#Service profile json ***
+								|---functions	#Service program
+								|---test	#test program
+		
+		
+		
+		
+## Microservice example (PHP)
+
+		This program is stored in mode1.class.php in the functions folder.
+		
+		``` php
+		  <?php
+				require "Test.class.php";
+				class mode1{
+					public function a1(){
+						return "hehe";
+					}
+				
+					public function b1($a){
+						$t=new Test();
+						return "hehe".$a;
+					}
 				}
+				
+			
+			?>
+		```
+		
+		Class names and method names cannot be the same in the same microservice
+		
+## Microservice example (JAVA)
+
+		This program is stored in the testsClass.jar in the functions folder.
+		
+		``` java
+		public class testClass{
+			public String hello() {
+				
+				return "hehejava";
 			}
 			
-		
-		?>
-	```
-	
-	注：在同一个微服务中类名和方法名不能相同
-	
-## 微服务编写示例(JAVA版)
-
-	本程序存放在functions文件夹中的testClass.jar
-	
-	``` java
-	public class testClass{
-		public String hello() {
-			
-			return "hehejava";
+			public String testjava() {
+				
+				return "t-java";
+			}
 		}
+		```
 		
-		public String testjava() {
-			
-			return "t-java";
-		}
-	}
-	```
+		Class names and method names cannot be the same in the same microservice
 	
-	注：在同一个微服务中类名和方法名不能相同
-			
-## 微服务配置json示例文件
+## Microservice configuration json sample file
 	
-	{	"name": "serviceB",													#微服务名称
-		"call_type": "rpc",													#调用类型(rpc http)
-		"service_type": "common",											
-		"version": "v1.0",													#微服务版本
-		"service_host": "127.0.0.1",										#ip
-		"service_url": "/b",												#微服务路由地址
-		"version_code": 1,													#版本号
-		"language": "php",													#编写语言
-		"api-gate": "api-gate1",											#暴露的网关
-		"service_mes": "aaa",											
-		"mods": [{															#一个模块
-			"name": "mode1",												#模块名称
-			"file_path": "D:/mic_service/service/serviceB/functions/mode1.class.php",			#模块文件路径
-			"functions": [{													#方法
-				"name": "a1",												#方法名
-				"syn_asyn": "syn",											#同步或异步	(syn/asyn)
-				"http_url": "/url1",										#http路由地址
-				"params": [],												
-				"cache": "memory"											#是否缓存(""/"text"/"memory")
-			}, {
-				"name": "b1",
-				"syn_asyn": "syn",
-				"http_url": "/url2",
-				"params": [
-					["http_a", "a", "get"]									#传参列表(第一个是网关外请求的参数key，第二个是函数对应的变量名称)
-				],
-				"cache": ""
-			}, {
-				"name": "btest",
-				"syn_asyn": "syn",
-				"http_url": "/url3",
-				"params": [],
-				"cache": ""
+		{	"name": "serviceB",													#Microservice name
+			"call_type": "rpc",													#Call type(rpc http)
+			"service_type": "common",											
+			"version": "v1.0",													#Microservice version
+			"service_host": "127.0.0.1",										#ip
+			"service_url": "/b",												#Microservice routing address
+			"version_code": 1,													#version number
+			"language": "php",													#Writing language
+			"api-gate": "api-gate1",											#Exposed gateway
+			"service_mes": "aaa",											
+			"mods": [{															#One module
+				"name": "mode1",												#Module name
+				"file_path": "D:/mic_service/service/serviceB/functions/mode1.class.php",			#Module file path
+				"functions": [{													#function
+					"name": "a1",												#function name
+					"syn_asyn": "syn",											#Synchronous or asynchronous	(syn/asyn)
+					"http_url": "/url1",										#http Routing address
+					"params": [],												
+					"cache": "memory"											#cache(""/"text"/"memory")
+				}, {
+					"name": "b1",
+					"syn_asyn": "syn",
+					"http_url": "/url2",
+					"params": [
+						["http_a", "a", "get"]									#parameter list (first is the parameter key of the request outside the gateway, second is name of the function)
+					],
+					"cache": ""
+				}, {
+					"name": "btest",
+					"syn_asyn": "syn",
+					"http_url": "/url3",
+					"params": [],
+					"cache": ""
+				}]
 			}]
-		}]
-	}
-	
-## 聚合请求json示例文件
+		}		
 
-	aggregation文件夹下的aggregation_service.json文件
-	
+## Aggregate request json sample file
+
+		Aggregation_service.json file under the aggregation folder
+		
 		[{
-			"call_url": "/aaa",									#网关外调用路由
-			"serial_parallel": "parallel",						#串行或并行(这个版本只支持串行)
-			"ask": ["/b/url1", "/b/url2"],						#网关内请求的微服务url(和外部单独请求的url相同)
+			"call_url": "/aaa",									#Call routing outside the gateway
+			"serial_parallel": "parallel",						#Serial or parallel (this version only supports serial)
+			"ask": ["/b/url1", "/b/url2"],						#The microservice url requested in the gateway (same as the externally requested url)
 			"key": ["key1", "key2"]
 		}]
+	
+		Return example:
 		
-	返回示例:
+			{
+			    "key1": {
+			        "ask_name": "a1",
+			        "ask_url": "/url1",
+			        "service_name": "serviceB",
+			        "mes": "hehe---",
+			        "version": "v1.0"
+			    },
+			    "key2": {
+			        "ask_name": "b1",
+			        "ask_url": "/url2",
+			        "service_name": "serviceB",
+			        "mes": "haha---",
+			        "version": "v1.0"
+			    }
+			}
+		
+## control commands
 	
-		{
-		    "key1": {
-		        "ask_name": "a1",
-		        "ask_url": "/url1",
-		        "service_name": "serviceB",
-		        "mes": "hehe---",
-		        "version": "v1.0"
-		    },
-		    "key2": {
-		        "ask_name": "b1",
-		        "ask_url": "/url2",
-		        "service_name": "serviceB",
-		        "mes": "haha---",
-		        "version": "v1.0"
-		    }
-		}
+		[TODO]
+	
+## control program
 
-## 控制命令
-	
-	控制命令.md文件	O(∩_∩)O
-	
-## 控制程序
-	
-	程序里面提供了一个快速发送mqtt命令控制节点的类和一个查看节点信息的类
-	
-	1.在send_service_control_commond中control_service_as.java用于发送控制信息
-	
-		1)	** public void start_service(String service_name,String service_version,String node) **
-				用于启动服务
-				service_name->			服务名称
-				service_version->		服务版本
-				node->					需要启动本服务节点
-				eg:
-					start_service("*", "*", "*");
-					start_service("serviceB|serviceD", "*", "*");
+		The program provides a class that quickly sends the mqtt command control node and a class that views node information.
+		
+		1.Control_service_as.java is used to send control information in send_service_control_commond
+		
+			1)	** public void start_service(String service_name,String service_version,String node) **
+			
+					Used to start the service
 					
-		
-		
-		2)	** public void stop_service(String service_name,String service_version,String node) **	
-			** public void stop_service_id(String service_id,String node) **
-				用于停止服务
-				eg:
-					stop_service("serviceA", "*", "*");
-					stop_service_id("service_1559206182267_20","*");
+					service_name->			service name
+					service_version->		Service version
+					node->					Need to start this service node
+					eg:
+						start_service("*", "*", "*");
+						start_service("serviceB|serviceD", "*", "*");
+						
+			
+			
+			2)	** public void stop_service(String service_name,String service_version,String node) **	
+				** public void stop_service_id(String service_id,String node) **
+				
+					Used to stop the service
 					
-		...(具体看代码)			⊙﹏⊙‖∣° 
-	
-	
-	
-	2.在control_service_as.java中查看各类节点信息
-	
-		show_service_as_mcs("*");
-		show_api_gate_mcs("*");
-		show_service_as_api_gate("*");
+					eg:
+						stop_service("serviceA", "*", "*");
+						stop_service_id("service_1559206182267_20","*");
+						
+			...(Look at the code)			�ѩn�ѡ��O�� 
 		
-		...(具体看代码) 		⊙﹏⊙‖∣° 
-
-## 压力测试
-
-	[TODO]	└(^o^)┘; 
+		
+		
+		2.View various types of node information in control_service_as.java
+		
+			show_service_as_mcs("*");
+			show_api_gate_mcs("*");
+			show_service_as_api_gate("*");
+			
+			...(Look at the code) 		�ѩn�ѡ��O�� 
+		
+## pressure test
 	
-## 与其他框架对比
-
-	[TODO]	⊙﹏⊙‖∣°
-
-## 支持的语言
+		[TODO]	��(^o^)��;
 	
-	目前开源的这个版本只支持PHP/java版本
+## Compared with other frames
+
+		[TODO]	�ѩn�ѡ��O��
 	
-## 依赖
+## Supported language
 
-	mqtt
-	jdk
-	hprose
-
+		Currently open source version only supports PHP/java version
+	
+## Require
+	
+		mqtt
+		jdk
+		hprose
+	
 ## [TODO]
-	
-	目前开源的这个版本不带日志记录和埋点监测等功能
-	压力测试
-	目前开源的这个版本不带python版本的微服务
+
+		Currently, this version of open source does not have functions such as logging and burying monitoring.
+		pressure test.
+		Currently open source version of this microservice without python version.
+
+
+
+
+
+
+
+
+
+
 
 		
 		
-
-		
-
